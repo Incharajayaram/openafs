@@ -34,6 +34,7 @@ static void *beforeRock, *afterRock;
 static char initcmd_opcode[] = "initcmd";	/*Name of initcmd opcode */
 static cmd_config_section *globalConfig = NULL;
 static const char *commandName = NULL;
+static int syntaxInited = 0;
 
 /* take name and string, and return null string if name is empty, otherwise return
    the concatenation of the two strings */
@@ -67,6 +68,87 @@ SubString(char *amain, char *asub)
 	amain++;
     }
     return 0;			/* didn't find it */
+}
+
+static void
+json_write_string(FILE *out, const char *str)
+{
+    const unsigned char *p;
+
+    fputc('"', out);
+    for (p = (const unsigned char *)str; *p; p++) {
+	switch (*p) {
+	case '\\':
+	case '"':
+	    fputc('\\', out);
+	    fputc(*p, out);
+	    break;
+	case '\b':
+	    fputs("\\b", out);
+	    break;
+	case '\f':
+	    fputs("\\f", out);
+	    break;
+	case '\n':
+	    fputs("\\n", out);
+	    break;
+	case '\r':
+	    fputs("\\r", out);
+	    break;
+	case '\t':
+	    fputs("\\t", out);
+	    break;
+	default:
+	    if (*p < 0x20) {
+		fprintf(out, "\\u%04x", (unsigned int)*p);
+	    } else {
+		fputc(*p, out);
+	    }
+	    break;
+	}
+    }
+    fputc('"', out);
+}
+
+static void
+json_write_nullable_string(FILE *out, const char *str)
+{
+    if (str == NULL) {
+	fputs("null", out);
+	return;
+    }
+    json_write_string(out, str);
+}
+
+static const char *
+parm_type_string(int type)
+{
+    switch (type) {
+    case CMD_FLAG:
+	return "flag";
+    case CMD_SINGLE:
+	return "single";
+    case CMD_LIST:
+	return "list";
+    case CMD_SINGLE_OR_FLAG:
+	return "single_or_flag";
+    default:
+	return "unknown";
+    }
+}
+
+static void
+json_write_item_list(FILE *out, struct cmd_item *item)
+{
+    int first = 1;
+    fputc('[', out);
+    for (; item != NULL; item = item->next) {
+	if (!first)
+	    fputc(',', out);
+	first = 0;
+	json_write_string(out, item->data ? item->data : "");
+    }
+    fputc(']', out);
 }
 
 static int
@@ -334,6 +416,89 @@ PrintFlagHelp(struct cmd_syndesc *as)
 	printf("%-7s%-*s  %s\n", flag_prefix, flag_width, tp->name, tp->help);
 	flag_prefix = "";
     }
+}
+
+int
+cmd_DumpSyntax(FILE *out, const char *format)
+{
+    struct cmd_syndesc *ts;
+    int first_cmd = 1;
+
+    if (format == NULL || strcmp(format, "json") != 0) {
+	fprintf(stderr, "cmd_DumpSyntax: unsupported format\n");
+	return CMD_INTERNALERROR;
+    }
+
+    if (!syntaxInited) {
+	syntaxInited = 1;
+	initSyntax();
+    }
+
+    fputc('[', out);
+    for (ts = allSyntax; ts; ts = ts->next) {
+	struct cmd_syndesc *alias;
+	struct cmd_parmdesc *tp;
+	int i;
+	int first_alias = 1;
+	int first_param = 1;
+
+	if (ts->flags & CMD_ALIAS)
+	    continue;
+
+	if (!first_cmd)
+	    fputc(',', out);
+	first_cmd = 0;
+
+	fputc('{', out);
+	fputs("\"command\":", out);
+	json_write_string(out, ts->name ? ts->name : "");
+	fputs(",\"help\":", out);
+	json_write_nullable_string(out, ts->help);
+	fputs(",\"hidden\":", out);
+	fputs((ts->flags & CMD_HIDDEN) ? "true" : "false", out);
+	fputs(",\"implicit\":", out);
+	fputs((ts->flags & CMD_IMPLICIT) ? "true" : "false", out);
+
+	fputs(",\"aliases\":", out);
+	fputc('[', out);
+	for (alias = ts->nextAlias; alias; alias = alias->nextAlias) {
+	    if (!first_alias)
+		fputc(',', out);
+	    first_alias = 0;
+	    json_write_string(out, alias->name ? alias->name : "");
+	}
+	fputc(']', out);
+
+	fputs(",\"parameters\":", out);
+	fputc('[', out);
+	for (i = 0; i < CMD_MAXPARMS; i++) {
+	    tp = &ts->parms[i];
+	    if (tp->type == 0)
+		continue;
+	    if (!first_param)
+		fputc(',', out);
+	    first_param = 0;
+	    fputc('{', out);
+	    fputs("\"name\":", out);
+	    json_write_string(out, tp->name ? tp->name : "");
+	    fputs(",\"type\":", out);
+	    json_write_string(out, parm_type_string(tp->type));
+	    fputs(",\"required\":", out);
+	    fputs((tp->flags & CMD_OPTIONAL) ? "false" : "true", out);
+	    fputs(",\"hidden\":", out);
+	    fputs((tp->flags & CMD_HIDE) ? "true" : "false", out);
+	    fputs(",\"help\":", out);
+	    json_write_nullable_string(out, tp->help);
+	    fputs(",\"aliases\":", out);
+	    json_write_item_list(out, tp->aliases);
+	    fputc('}', out);
+	}
+	fputc(']', out);
+	fputc('}', out);
+    }
+    fputc(']', out);
+    fputc('\n', out);
+    return 0;
 }
 
 static int
@@ -836,13 +1001,12 @@ cmd_Parse(int argc, char **argv, struct cmd_syndesc **outsyntax)
     int code = 0;
     char *param = NULL;
     char *embeddedvalue = NULL;
-    static int initd = 0;	/*Is this the first time this routine has been called? */
     static int initcmdpossible = 1;	/*Should be consider parsing the initial command? */
 
     *outsyntax = NULL;
 
-    if (!initd) {
-	initd = 1;
+    if (!syntaxInited) {
+	syntaxInited = 1;
 	initSyntax();
     }
 
@@ -1099,6 +1263,13 @@ cmd_Dispatch(int argc, char **argv)
 {
     struct cmd_syndesc *ts = NULL;
     int code;
+    int i;
+
+    for (i = 1; i < argc; i++) {
+	if (strcmp(argv[i], "--dump-syntax") == 0) {
+	    return cmd_DumpSyntax(stdout, "json");
+	}
+    }
 
     code = cmd_Parse(argc, argv, &ts);
     if (code) {

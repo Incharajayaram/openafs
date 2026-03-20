@@ -10,6 +10,8 @@
 #ifndef __CMD_INCL__
 #define	__CMD_INCL__	    1
 
+#include <stdio.h>
+
 /* parmdesc types */
 #define	CMD_FLAG	1	/* no parms */
 #define	CMD_SINGLE	2	/* one parm */
@@ -78,6 +80,7 @@ extern int cmd_AddParm(struct cmd_syndesc *as, char *aname, int atype,
 extern int cmd_AddParmAtOffset(struct cmd_syndesc *as, int ref, char *name,
 			       int atype, afs_int32 aflags, char *ahelp);
 extern int cmd_AddParmAlias(struct cmd_syndesc *as, int pos, char *alias);
+extern int cmd_DumpSyntax(FILE *out, const char *format);
 extern int cmd_Dispatch(int argc, char **argv);
 extern int cmd_FreeArgv(char **argv);
 extern int cmd_ParseLine(char *aline, char **argv, afs_int32 * an,
