@@ -14,694 +14,694 @@ _openafs_vos() {
             case "$subcmd" in
                 addsite)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-roid[option]' \
-                        '-valid[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-roid[arg]:arg:_files' \
+                        '-valid[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 backup)
                     _arguments \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 backupsys)
                     _arguments \
-                        '-prefix[option]' \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-exclude[option]' \
-                        '-xprefix[option]' \
-                        '-dryrun[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-prefix[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-exclude[noarg]' \
+                        '-xprefix[arg]:arg:_files' \
+                        '-dryrun[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 changeaddr)
                     _arguments \
-                        '-oldaddr[option]' \
-                        '-newaddr[option]' \
-                        '-remove[option]' \
-                        '-force[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-oldaddr[arg]:arg:_files' \
+                        '-newaddr[arg]:arg:_files' \
+                        '-remove[noarg]' \
+                        '-force[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 changeloc)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 clone)
                     _arguments \
-                        '-id[option]' \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-toname[option]' \
-                        '-toid[option]' \
-                        '-offline[option]' \
-                        '-readonly[option]' \
-                        '-readwrite[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-toname[arg]:arg:_files' \
+                        '-toid[arg]:arg:_files' \
+                        '-offline[noarg]' \
+                        '-readonly[noarg]' \
+                        '-readwrite[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 convertROtoRW)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-force[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-force[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 copy)
                     _arguments \
-                        '-id[option]' \
-                        '-fromserver[option]' \
-                        '-frompartition[option]' \
-                        '-toname[option]' \
-                        '-toserver[option]' \
-                        '-topartition[option]' \
-                        '-offline[option]' \
-                        '-readonly[option]' \
-                        '-live[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-fromserver[arg]:arg:_files' \
+                        '-frompartition[arg]:arg:_files' \
+                        '-toname[arg]:arg:_files' \
+                        '-toserver[arg]:arg:_files' \
+                        '-topartition[arg]:arg:_files' \
+                        '-offline[noarg]' \
+                        '-readonly[noarg]' \
+                        '-live[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 create)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-name[option]' \
-                        '-maxquota[option]' \
-                        '-id[option]' \
-                        '-roid[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-name[arg]:arg:_files' \
+                        '-maxquota[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-roid[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 delentry)
                     _arguments \
-                        '-id[option]' \
-                        '-prefix[option]' \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-dryrun[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-prefix[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-dryrun[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 dump)
                     _arguments \
-                        '-id[option]' \
-                        '-time[option]' \
-                        '-file[option]' \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-clone[option]' \
-                        '-omitdirs[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-time[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-clone[noarg]' \
+                        '-omitdirs[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 endtrans)
                     _arguments \
-                        '-server[option]' \
-                        '-transaction[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-transaction[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 examine)
                     _arguments \
-                        '-id[option]' \
-                        '-extended[option]' \
-                        '-format[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-extended[noarg]' \
+                        '-format[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listaddrs)
                     _arguments \
-                        '-uuid[option]' \
-                        '-host[option]' \
-                        '-printuuid[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-uuid[arg]:arg:_files' \
+                        '-host[arg]:arg:_files' \
+                        '-printuuid[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listpart)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listvldb)
                     _arguments \
-                        '-name[option]' \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-locked[option]' \
-                        '-quiet[option]' \
-                        '-nosort[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-locked[noarg]' \
+                        '-quiet[noarg]' \
+                        '-nosort[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listvol)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-fast[option]' \
-                        '-long[option]' \
-                        '-quiet[option]' \
-                        '-extended[option]' \
-                        '-format[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-fast[noarg]' \
+                        '-long[noarg]' \
+                        '-quiet[noarg]' \
+                        '-extended[noarg]' \
+                        '-format[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 lock)
                     _arguments \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 move)
                     _arguments \
-                        '-id[option]' \
-                        '-fromserver[option]' \
-                        '-frompartition[option]' \
-                        '-toserver[option]' \
-                        '-topartition[option]' \
-                        '-live[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-fromserver[arg]:arg:_files' \
+                        '-frompartition[arg]:arg:_files' \
+                        '-toserver[arg]:arg:_files' \
+                        '-topartition[arg]:arg:_files' \
+                        '-live[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 offline)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-sleep[option]' \
-                        '-busy[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-sleep[arg]:arg:_files' \
+                        '-busy[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 online)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 partinfo)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-summary[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-summary[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 release)
                     _arguments \
-                        '-id[option]' \
-                        '-force[option]' \
-                        '-f[option]' \
-                        '-force-reclone[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-force[noarg]' \
+                        '-f[noarg]' \
+                        '-force-reclone[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 remaddrs)
                     _arguments \
-                        '-uuid[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-uuid[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 remove)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 remsite)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 rename)
                     _arguments \
-                        '-oldname[option]' \
-                        '-newname[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-oldname[arg]:arg:_files' \
+                        '-newname[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 restore)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-name[option]' \
-                        '-file[option]' \
-                        '-id[option]' \
-                        '-overwrite[option]' \
-                        '-offline[option]' \
-                        '-readonly[option]' \
-                        '-creation[option]' \
-                        '-lastupdate[option]' \
-                        '-nodelete[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-name[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-overwrite[arg]:arg:_files' \
+                        '-offline[noarg]' \
+                        '-readonly[noarg]' \
+                        '-creation[arg]:arg:_files' \
+                        '-lastupdate[arg]:arg:_files' \
+                        '-nodelete[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setaddrs)
                     _arguments \
-                        '-uuid[option]' \
-                        '-host[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-uuid[arg]:arg:_files' \
+                        '-host[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setfields)
                     _arguments \
-                        '-id[option]' \
-                        '-maxquota[option]' \
-                        '-clearuse[option]' \
-                        '-clearVolUpCounter[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-maxquota[arg]:arg:_files' \
+                        '-clearuse[noarg]' \
+                        '-clearVolUpCounter[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 shadow)
                     _arguments \
-                        '-id[option]' \
-                        '-fromserver[option]' \
-                        '-frompartition[option]' \
-                        '-toserver[option]' \
-                        '-topartition[option]' \
-                        '-toname[option]' \
-                        '-toid[option]' \
-                        '-offline[option]' \
-                        '-readonly[option]' \
-                        '-live[option]' \
-                        '-incremental[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-fromserver[arg]:arg:_files' \
+                        '-frompartition[arg]:arg:_files' \
+                        '-toserver[arg]:arg:_files' \
+                        '-topartition[arg]:arg:_files' \
+                        '-toname[arg]:arg:_files' \
+                        '-toid[arg]:arg:_files' \
+                        '-offline[noarg]' \
+                        '-readonly[noarg]' \
+                        '-live[noarg]' \
+                        '-incremental[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 size)
                     _arguments \
-                        '-id[option]' \
-                        '-partition[option]' \
-                        '-server[option]' \
-                        '-dump[option]' \
-                        '-time[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-server[arg]:arg:_files' \
+                        '-dump[noarg]' \
+                        '-time[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 status)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 syncserv)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-dryrun[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-dryrun[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 syncvldb)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-volume[option]' \
-                        '-dryrun[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-volume[arg]:arg:_files' \
+                        '-dryrun[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 unlock)
                     _arguments \
-                        '-id[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-id[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 unlockvldb)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 zap)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-id[option]' \
-                        '-force[option]' \
-                        '-backup[option]' \
-                        '-cell[option]' \
-                        '-c[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-verbose[option]' \
-                        '-encrypt[option]' \
-                        '-noresolve[option]' \
-                        '-config[option]' \
-                        '-rxgk[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-id[arg]:arg:_files' \
+                        '-force[noarg]' \
+                        '-backup[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-c[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-verbose[noarg]' \
+                        '-encrypt[noarg]' \
+                        '-noresolve[noarg]' \
+                        '-config[arg]:arg:_files' \
+                        '-rxgk[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
             esac

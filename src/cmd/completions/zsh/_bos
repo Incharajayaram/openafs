@@ -14,325 +14,325 @@ _openafs_bos() {
             case "$subcmd" in
                 addhost)
                     _arguments \
-                        '-server[option]' \
-                        '-host[option]' \
-                        '-clone[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-host[arg]:arg:_files' \
+                        '-clone[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 addkey)
                     _arguments \
-                        '-server[option]' \
-                        '-key[option]' \
-                        '-kvno[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-key[arg]:arg:_files' \
+                        '-kvno[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 adduser)
                     _arguments \
-                        '-server[option]' \
-                        '-user[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-user[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 create)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-type[option]' \
-                        '-cmd[option]' \
-                        '-notifier[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-type[arg]:arg:_files' \
+                        '-cmd[arg]:arg:_files' \
+                        '-notifier[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 delete)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 exec)
                     _arguments \
-                        '-server[option]' \
-                        '-cmd[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cmd[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getdate)
                     _arguments \
-                        '-server[option]' \
-                        '-file[option]' \
-                        '-dir[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-dir[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getlog)
                     _arguments \
-                        '-server[option]' \
-                        '-file[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getrestart)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getrestricted)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 install)
                     _arguments \
-                        '-server[option]' \
-                        '-file[option]' \
-                        '-dir[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-dir[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listhosts)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listkeys)
                     _arguments \
-                        '-server[option]' \
-                        '-showkey[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-showkey[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listusers)
                     _arguments \
-                        '-server[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 prune)
                     _arguments \
-                        '-server[option]' \
-                        '-bak[option]' \
-                        '-old[option]' \
-                        '-core[option]' \
-                        '-all[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-bak[noarg]' \
+                        '-old[noarg]' \
+                        '-core[noarg]' \
+                        '-all[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 removehost)
                     _arguments \
-                        '-server[option]' \
-                        '-host[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-host[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 removekey)
                     _arguments \
-                        '-server[option]' \
-                        '-kvno[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-kvno[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 removeuser)
                     _arguments \
-                        '-server[option]' \
-                        '-user[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-user[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 restart)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-bosserver[option]' \
-                        '-all[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-bosserver[noarg]' \
+                        '-all[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 salvage)
                     _arguments \
-                        '-server[option]' \
-                        '-partition[option]' \
-                        '-volume[option]' \
-                        '-file[option]' \
-                        '-all[option]' \
-                        '-showlog[option]' \
-                        '-parallel[option]' \
-                        '-tmpdir[option]' \
-                        '-orphans[option]' \
-                        '-forceDAFS[option]' \
-                        '-salvagedirs[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-partition[arg]:arg:_files' \
+                        '-volume[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-all[noarg]' \
+                        '-showlog[noarg]' \
+                        '-parallel[arg]:arg:_files' \
+                        '-tmpdir[arg]:arg:_files' \
+                        '-orphans[arg]:arg:_files' \
+                        '-forceDAFS[noarg]' \
+                        '-salvagedirs[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setauth)
                     _arguments \
-                        '-server[option]' \
-                        '-authrequired[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-authrequired[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setcellname)
                     _arguments \
-                        '-server[option]' \
-                        '-name[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-name[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setrestart)
                     _arguments \
-                        '-server[option]' \
-                        '-time[option]' \
-                        '-general[option]' \
-                        '-newbinary[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-time[arg]:arg:_files' \
+                        '-general[noarg]' \
+                        '-newbinary[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setrestricted)
                     _arguments \
-                        '-server[option]' \
-                        '-mode[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-mode[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 shutdown)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-wait[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-wait[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 start)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 startup)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 status)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-long[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-long[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 stop)
                     _arguments \
-                        '-server[option]' \
-                        '-instance[option]' \
-                        '-wait[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-instance[arg]:arg:_files' \
+                        '-wait[noarg]' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 uninstall)
                     _arguments \
-                        '-server[option]' \
-                        '-file[option]' \
-                        '-dir[option]' \
-                        '-cell[option]' \
-                        '-noauth[option]' \
-                        '-localauth[option]' \
-                        '-help[option]' \
+                        '-server[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-dir[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-localauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
             esac

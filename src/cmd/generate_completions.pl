@@ -69,8 +69,9 @@ for my $tool (@tools) {
         print $fh '    local cur="${COMP_WORDS[COMP_CWORD]}"' . "\n";
 
         if ($no_opcodes) {
-            my $opts = join(' ', options_for_command($commands[0]));
-            print $fh '    COMPREPLY=( $(compgen -W "' . $opts . '" -- "$cur") )' . "\n";
+            my @opts = options_for_command($commands[0]);
+            my $words = bash_option_words(@opts);
+            print $fh '    COMPREPLY=( $(compgen -W "' . $words . '" -- "$cur") )' . "\n";
             print $fh "    return\n";
         } else {
             my @visible_cmds = grep { is_visible_command($_) } @commands;
@@ -83,11 +84,12 @@ for my $tool (@tools) {
             print $fh '    case "$sub" in' . "\n";
 
             for my $cmd (@visible_cmds) {
-                my $opts = join(' ', options_for_command($cmd));
+                my @opts = options_for_command($cmd);
+                my $words = bash_option_words(@opts);
                 my $name = $cmd->{command};
                 print $fh "        $name)\n";
-                if ($opts ne '') {
-                    print $fh '            COMPREPLY=( $(compgen -W "' . $opts . '" -- "$cur") )' . "\n";
+                if ($words ne '') {
+                    print $fh '            COMPREPLY=( $(compgen -W "' . $words . '" -- "$cur") )' . "\n";
                 } else {
                     print $fh "            COMPREPLY=()\n";
                 }
@@ -107,7 +109,7 @@ for my $tool (@tools) {
             my @opts = options_for_command($commands[0]);
             print $fh "    _arguments -s \\\n";
             for my $opt (@opts) {
-                print $fh "        '" . $opt . "[option]' \\\n";
+                print $fh "        '" . zsh_opt_spec($opt) . "' \\\n";
             }
             print $fh "        '*:arg:_files'\n";
         } else {
@@ -127,7 +129,7 @@ for my $tool (@tools) {
                 if (@opts) {
                     print $fh "                    _arguments \\\n";
                     for my $opt (@opts) {
-                        print $fh "                        '" . $opt . "[option]' \\\n";
+                        print $fh "                        '" . zsh_opt_spec($opt) . "' \\\n";
                     }
                     print $fh "                        '*:arg:_files'\n";
                 } else {
@@ -168,12 +170,43 @@ sub options_for_command {
         next if $p->{hidden};
         next if !$p->{name};
         next if $p->{name} !~ /^-/;
-        push @out, $p->{name};
+
+        my @names = ($p->{name});
         if ($p->{aliases} && ref($p->{aliases}) eq 'ARRAY') {
-            push @out, @{$p->{aliases}};
+            push @names, @{$p->{aliases}};
+        }
+
+        my $type = $p->{type} || '';
+        for my $name (@names) {
+            push @out, {
+                name => $name,
+                type => $type,
+            };
         }
     }
     return @out;
+}
+
+sub bash_option_words {
+    my (@opts) = @_;
+    return join(' ', map { $_->{name} } @opts);
+}
+
+sub zsh_opt_spec {
+    my ($opt) = @_;
+    my $name = $opt->{name};
+    my $type = $opt->{type} || '';
+
+    if ($type eq 'flag') {
+        return $name . "[noarg]";
+    }
+    if ($type eq 'single_or_flag') {
+        return $name . "[arg]::arg:_files";
+    }
+    if ($type eq 'single' || $type eq 'list') {
+        return $name . "[arg]:arg:_files";
+    }
+    return $name . "[arg]:arg:_files";
 }
 
 sub run_dump_syntax {

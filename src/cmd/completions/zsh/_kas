@@ -14,142 +14,142 @@ _openafs_kas() {
             case "$subcmd" in
                 create)
                     _arguments \
-                        '-name[option]' \
-                        '-initial_password[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-initial_password[arg]:arg:_files' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 delete)
                     _arguments \
-                        '-name[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 examine)
                     _arguments \
-                        '-name[option]' \
-                        '-showkey[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-showkey[noarg]' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 forgetticket)
                     _arguments \
-                        '-all[option]' \
-                        '-help[option]' \
+                        '-all[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 interactive)
                     _arguments \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 list)
                     _arguments \
-                        '-long[option]' \
-                        '-showadmin[option]' \
-                        '-showkey[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-long[noarg]' \
+                        '-showadmin[noarg]' \
+                        '-showkey[noarg]' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listtickets)
                     _arguments \
-                        '-name[option]' \
-                        '-long[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-long[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 noauthentication)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 quit)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setfields)
                     _arguments \
-                        '-name[option]' \
-                        '-flags[option]' \
-                        '-expiration[option]' \
-                        '-lifetime[option]' \
-                        '-pwexpires[option]' \
-                        '-reuse[option]' \
-                        '-attempts[option]' \
-                        '-locktime[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-flags[arg]:arg:_files' \
+                        '-expiration[arg]:arg:_files' \
+                        '-lifetime[arg]:arg:_files' \
+                        '-pwexpires[arg]:arg:_files' \
+                        '-reuse[arg]:arg:_files' \
+                        '-attempts[arg]:arg:_files' \
+                        '-locktime[arg]:arg:_files' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setpassword)
                     _arguments \
-                        '-name[option]' \
-                        '-new_password[option]' \
-                        '-kvno[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-new_password[arg]:arg:_files' \
+                        '-kvno[arg]:arg:_files' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 statistics)
                     _arguments \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 stringtokey)
                     _arguments \
-                        '-string[option]' \
-                        '-cell[option]' \
-                        '-help[option]' \
+                        '-string[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 unlock)
                     _arguments \
-                        '-name[option]' \
-                        '-admin_username[option]' \
-                        '-password_for_admin[option]' \
-                        '-cell[option]' \
-                        '-servers[option]' \
-                        '-noauth[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-admin_username[arg]:arg:_files' \
+                        '-password_for_admin[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-noauth[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
             esac

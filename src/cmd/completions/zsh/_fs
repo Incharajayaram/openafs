@@ -14,349 +14,349 @@ _openafs_fs() {
             case "$subcmd" in
                 bypassthreshold)
                     _arguments \
-                        '-size[option]' \
-                        '-help[option]' \
+                        '-size[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 checkservers)
                     _arguments \
-                        '-cell[option]' \
-                        '-all[option]' \
-                        '-fast[option]' \
-                        '-interval[option]' \
-                        '-help[option]' \
+                        '-cell[arg]:arg:_files' \
+                        '-all[noarg]' \
+                        '-fast[noarg]' \
+                        '-interval[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 checkvolumes)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 cleanacl)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 copyacl)
                     _arguments \
-                        '-fromdir[option]' \
-                        '-todir[option]' \
-                        '-clear[option]' \
-                        '-id[option]' \
-                        '-if[option]' \
-                        '-help[option]' \
+                        '-fromdir[arg]:arg:_files' \
+                        '-todir[arg]:arg:_files' \
+                        '-clear[noarg]' \
+                        '-id[noarg]' \
+                        '-if[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 discon)
                     _arguments \
-                        '-mode[option]' \
-                        '-policy[option]' \
-                        '-force[option]' \
-                        '-uid[option]' \
-                        '-help[option]' \
+                        '-mode[arg]:arg:_files' \
+                        '-policy[arg]:arg:_files' \
+                        '-force[noarg]' \
+                        '-uid[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 diskfree)
                     _arguments \
-                        '-path[option]' \
-                        '-human[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-human[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 examine)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 exportafs)
                     _arguments \
-                        '-type[option]' \
-                        '-start[option]' \
-                        '-convert[option]' \
-                        '-uidcheck[option]' \
-                        '-submounts[option]' \
-                        '-clipags[option]' \
-                        '-pagcb[option]' \
-                        '-help[option]' \
+                        '-type[arg]:arg:_files' \
+                        '-start[arg]:arg:_files' \
+                        '-convert[arg]:arg:_files' \
+                        '-uidcheck[arg]:arg:_files' \
+                        '-submounts[arg]:arg:_files' \
+                        '-clipags[arg]:arg:_files' \
+                        '-pagcb[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 flush)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 flushall)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 flushmount)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 flushvolume)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getcacheparms)
                     _arguments \
-                        '-files[option]' \
-                        '-excessive[option]' \
-                        '-help[option]' \
+                        '-files[noarg]' \
+                        '-excessive[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getcalleraccess)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getcellstatus)
                     _arguments \
-                        '-cell[option]' \
-                        '-help[option]' \
+                        '-cell[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getclientaddrs)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getcrypt)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getfid)
                     _arguments \
-                        '-path[option]' \
-                        '-literal[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-literal[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 getserverprefs)
                     _arguments \
-                        '-file[option]' \
-                        '-numeric[option]' \
-                        '-vlservers[option]' \
-                        '-help[option]' \
+                        '-file[arg]:arg:_files' \
+                        '-numeric[noarg]' \
+                        '-vlservers[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listacl)
                     _arguments \
-                        '-path[option]' \
-                        '-id[option]' \
-                        '-if[option]' \
-                        '-cmd[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-id[noarg]' \
+                        '-if[noarg]' \
+                        '-cmd[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listaliases)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listcells)
                     _arguments \
-                        '-numeric[option]' \
-                        '-help[option]' \
+                        '-numeric[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 listquota)
                     _arguments \
-                        '-path[option]' \
-                        '-human[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-human[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 lsmount)
                     _arguments \
-                        '-dir[option]' \
-                        '-help[option]' \
+                        '-dir[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 messages)
                     _arguments \
-                        '-show[option]' \
-                        '-help[option]' \
+                        '-show[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 mkmount)
                     _arguments \
-                        '-dir[option]' \
-                        '-vol[option]' \
-                        '-cell[option]' \
-                        '-rw[option]' \
-                        '-fast[option]' \
-                        '-help[option]' \
+                        '-dir[arg]:arg:_files' \
+                        '-vol[arg]:arg:_files' \
+                        '-cell[arg]:arg:_files' \
+                        '-rw[noarg]' \
+                        '-fast[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 newalias)
                     _arguments \
-                        '-alias[option]' \
-                        '-name[option]' \
-                        '-help[option]' \
+                        '-alias[arg]:arg:_files' \
+                        '-name[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 newcell)
                     _arguments \
-                        '-name[option]' \
-                        '-servers[option]' \
-                        '-linkedcell[option]' \
-                        '-help[option]' \
+                        '-name[arg]:arg:_files' \
+                        '-servers[arg]:arg:_files' \
+                        '-linkedcell[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 nukenfscreds)
                     _arguments \
-                        '-addr[option]' \
-                        '-help[option]' \
+                        '-addr[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 precache)
                     _arguments \
-                        '-blocks[option]' \
-                        '-help[option]' \
+                        '-blocks[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 quota)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 rmmount)
                     _arguments \
-                        '-dir[option]' \
-                        '-help[option]' \
+                        '-dir[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 rxstatpeer)
                     _arguments \
-                        '-enable[option]' \
-                        '-disable[option]' \
-                        '-clear[option]' \
-                        '-help[option]' \
+                        '-enable[noarg]' \
+                        '-disable[noarg]' \
+                        '-clear[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 rxstatproc)
                     _arguments \
-                        '-enable[option]' \
-                        '-disable[option]' \
-                        '-clear[option]' \
-                        '-help[option]' \
+                        '-enable[noarg]' \
+                        '-disable[noarg]' \
+                        '-clear[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setacl)
                     _arguments \
-                        '-dir[option]' \
-                        '-acl[option]' \
-                        '-clear[option]' \
-                        '-negative[option]' \
-                        '-id[option]' \
-                        '-if[option]' \
-                        '-help[option]' \
+                        '-dir[arg]:arg:_files' \
+                        '-acl[arg]:arg:_files' \
+                        '-clear[noarg]' \
+                        '-negative[noarg]' \
+                        '-id[noarg]' \
+                        '-if[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setcachesize)
                     _arguments \
-                        '-blocks[option]' \
-                        '-reset[option]' \
-                        '-help[option]' \
+                        '-blocks[arg]:arg:_files' \
+                        '-reset[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setcbaddr)
                     _arguments \
-                        '-addr[option]' \
-                        '-help[option]' \
+                        '-addr[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setcell)
                     _arguments \
-                        '-cell[option]' \
-                        '-suid[option]' \
-                        '-nosuid[option]' \
-                        '-help[option]' \
+                        '-cell[arg]:arg:_files' \
+                        '-suid[noarg]' \
+                        '-nosuid[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setclientaddrs)
                     _arguments \
-                        '-address[option]' \
-                        '-help[option]' \
+                        '-address[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setcrypt)
                     _arguments \
-                        '-crypt[option]' \
-                        '-help[option]' \
+                        '-crypt[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setquota)
                     _arguments \
-                        '-path[option]' \
-                        '-max[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-max[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setserverprefs)
                     _arguments \
-                        '-servers[option]' \
-                        '-vlservers[option]' \
-                        '-file[option]' \
-                        '-stdin[option]' \
-                        '-help[option]' \
+                        '-servers[arg]:arg:_files' \
+                        '-vlservers[arg]:arg:_files' \
+                        '-file[arg]:arg:_files' \
+                        '-stdin[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 setvol)
                     _arguments \
-                        '-path[option]' \
-                        '-max[option]' \
-                        '-offlinemsg[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-max[arg]:arg:_files' \
+                        '-offlinemsg[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 storebehind)
                     _arguments \
-                        '-kbytes[option]' \
-                        '-files[option]' \
-                        '-allfiles[option]' \
-                        '-verbose[option]' \
-                        '-help[option]' \
+                        '-kbytes[arg]:arg:_files' \
+                        '-files[arg]:arg:_files' \
+                        '-allfiles[arg]:arg:_files' \
+                        '-verbose[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 sysname)
                     _arguments \
-                        '-newsys[option]' \
-                        '-help[option]' \
+                        '-newsys[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 uuid)
                     _arguments \
-                        '-generate[option]' \
-                        '-help[option]' \
+                        '-generate[noarg]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 whereis)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 whichcell)
                     _arguments \
-                        '-path[option]' \
-                        '-help[option]' \
+                        '-path[arg]:arg:_files' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
                 wscell)
                     _arguments \
-                        '-help[option]' \
+                        '-help[noarg]' \
                         '*:arg:_files'
                     ;;
             esac

@@ -27,31 +27,49 @@ check_completion_file(const char *relpath, const char *needle, const char *desc)
 int
 main(int argc, char **argv)
 {
-    plan(8);
+    plan(14);
 
     check_completion_file("src/cmd/completions/bash/fs.bash",
                           "complete -F _openafs_fs fs",
                           "fs completion");
+    check_completion_file("src/cmd/completions/bash/fs.bash",
+                          "compgen -W",
+                          "fs bash has word list");
 
     check_completion_file("src/cmd/completions/bash/vos.bash",
                           "complete -F _openafs_vos vos",
                           "vos completion");
+    check_completion_file("src/cmd/completions/bash/vos.bash",
+                          "compgen -W",
+                          "vos bash has word list");
 
     check_completion_file("src/cmd/completions/zsh/_fs",
                           "compdef _openafs_fs fs",
                           "fs zsh completion");
+    check_completion_file("src/cmd/completions/zsh/_fs",
+                          "_arguments -C",
+                          "fs zsh uses _arguments");
 
     check_completion_file("src/cmd/completions/zsh/_vos",
                           "compdef _openafs_vos vos",
                           "vos zsh completion");
+    check_completion_file("src/cmd/completions/zsh/_vos",
+                          "_arguments -C",
+                          "vos zsh uses _arguments");
 
     check_completion_file("src/cmd/completions/bash/kas.bash",
                           "complete -F _openafs_kas kas",
                           "kas completion");
+    check_completion_file("src/cmd/completions/bash/kas.bash",
+                          "compgen -W",
+                          "kas bash has word list");
 
     check_completion_file("src/cmd/completions/zsh/_kas",
                           "compdef _openafs_kas kas",
                           "kas zsh completion");
+    check_completion_file("src/cmd/completions/zsh/_kas",
+                          "_arguments -C",
+                          "kas zsh uses _arguments");
 
     return 0;
 }

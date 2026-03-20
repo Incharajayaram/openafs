@@ -5,10 +5,10 @@
 _openafs_udebug() {
     local subcmd
     _arguments -s \
-        '-server[option]' \
-        '-port[option]' \
-        '-long[option]' \
-        '-help[option]' \
+        '-server[arg]:arg:_files' \
+        '-port[arg]:arg:_files' \
+        '-long[noarg]' \
+        '-help[noarg]' \
         '*:arg:_files'
 }
 compdef _openafs_udebug udebug
