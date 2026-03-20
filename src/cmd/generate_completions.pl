@@ -5,17 +5,22 @@ use JSON::PP qw(decode_json);
 use Getopt::Long qw(GetOptions);
 use File::Basename qw(basename);
 use File::Path qw(make_path);
+use File::Temp qw(tempdir);
 
 my $format = 'bash';
 my $out_dir = 'src/cmd/completions/bash';
 my $help = 0;
 my $skip_fail = 0;
+my $afsconf_dir = undef;
+my $afsconf_temp = 0;
 
 GetOptions(
     'format=s'  => \$format,
     'out-dir=s' => \$out_dir,
     'help'      => \$help,
     'skip-fail' => \$skip_fail,
+    'afsconf-dir=s' => \$afsconf_dir,
+    'afsconf-temp'  => \$afsconf_temp,
 ) or usage();
 
 usage() if $help;
@@ -31,8 +36,12 @@ if (!@tools) {
 
 make_path($out_dir);
 
+if ($afsconf_temp && defined $afsconf_dir) {
+    die "use only one of --afsconf-dir or --afsconf-temp\n";
+}
+
 for my $tool (@tools) {
-    my $json = qx{"$tool" --dump-syntax};
+    my $json = run_dump_syntax($tool, $afsconf_dir, $afsconf_temp);
     if ($? != 0) {
         if ($skip_fail) {
             warn "skipping $tool: --dump-syntax failed\n";
@@ -138,7 +147,7 @@ for my $tool (@tools) {
 }
 
 sub usage {
-    die "usage: generate_completions.pl --format bash --out-dir DIR [--skip-fail] <tool>...\n";
+    die "usage: generate_completions.pl --format bash --out-dir DIR [--skip-fail] [--afsconf-dir DIR|--afsconf-temp] <tool>...\n";
 }
 
 sub is_visible_command {
@@ -165,4 +174,37 @@ sub options_for_command {
         }
     }
     return @out;
+}
+
+sub run_dump_syntax {
+    my ($tool, $confdir, $use_temp) = @_;
+    my $env = '';
+
+    if ($use_temp) {
+        $confdir = temp_afsconf_dir();
+    }
+
+    if (defined $confdir) {
+        $env = "AFSCONF=\"$confdir\" ";
+    }
+
+    my $json = qx{$env"$tool" --dump-syntax};
+    return $json;
+}
+
+sub temp_afsconf_dir {
+    my $dir = tempdir("afsconfXXXXXX", TMPDIR => 1, CLEANUP => 1);
+    my $thiscell = "$dir/ThisCell";
+    my $csdb = "$dir/CellServDB";
+
+    open my $fh, '>', $thiscell or die "open $thiscell: $!\n";
+    print $fh "example.com\n";
+    close $fh;
+
+    open my $ch, '>', $csdb or die "open $csdb: $!\n";
+    print $ch ">example.com\n";
+    print $ch "127.0.0.1 #localhost\n";
+    close $ch;
+
+    return $dir;
 }
