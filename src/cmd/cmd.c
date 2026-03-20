@@ -434,7 +434,24 @@ cmd_DumpSyntax(FILE *out, const char *format)
 	initSyntax();
     }
 
-    fputc('[', out);
+    fputc('{', out);
+    fputs("\"format\":\"openafs-cmd-syntax\"", out);
+    fputs(",\"version\":1", out);
+    fputs(",\"command_name\":", out);
+    json_write_nullable_string(out, commandName);
+    fputs(",\"options\":{", out);
+    fputs("\"positional\":", out);
+    fputs(enablePositional ? "true" : "false", out);
+    fputs(",\"abbreviation\":", out);
+    fputs(enableAbbreviation ? "true" : "false", out);
+    fputs(",\"no_opcodes\":", out);
+    fputs(noOpcodes ? "true" : "false", out);
+    fputs("}", out);
+    fputs(",\"max_parms\":", out);
+    fprintf(out, "%d", CMD_MAXPARMS);
+    fputs(",\"help_parm_index\":", out);
+    fprintf(out, "%d", CMD_HELPPARM);
+    fputs(",\"commands\":[", out);
     for (ts = allSyntax; ts; ts = ts->next) {
 	struct cmd_syndesc *alias;
 	struct cmd_parmdesc *tp;
@@ -454,10 +471,18 @@ cmd_DumpSyntax(FILE *out, const char *format)
 	json_write_string(out, ts->name ? ts->name : "");
 	fputs(",\"help\":", out);
 	json_write_nullable_string(out, ts->help);
+	fputs(",\"a0name\":", out);
+	json_write_nullable_string(out, ts->a0name);
 	fputs(",\"hidden\":", out);
 	fputs((ts->flags & CMD_HIDDEN) ? "true" : "false", out);
 	fputs(",\"implicit\":", out);
 	fputs((ts->flags & CMD_IMPLICIT) ? "true" : "false", out);
+	fputs(",\"flags\":{", out);
+	fputs("\"hidden\":", out);
+	fputs((ts->flags & CMD_HIDDEN) ? "true" : "false", out);
+	fputs(",\"implicit\":", out);
+	fputs((ts->flags & CMD_IMPLICIT) ? "true" : "false", out);
+	fputs("}", out);
 
 	fputs(",\"aliases\":", out);
 	fputc('[', out);
@@ -479,24 +504,45 @@ cmd_DumpSyntax(FILE *out, const char *format)
 		fputc(',', out);
 	    first_param = 0;
 	    fputc('{', out);
-	    fputs("\"name\":", out);
+	    fputs("\"index\":", out);
+	    fprintf(out, "%d", i);
+	    fputs(",\"name\":", out);
 	    json_write_string(out, tp->name ? tp->name : "");
 	    fputs(",\"type\":", out);
 	    json_write_string(out, parm_type_string(tp->type));
+	    fputs(",\"type_id\":", out);
+	    fprintf(out, "%d", tp->type);
 	    fputs(",\"required\":", out);
 	    fputs((tp->flags & CMD_OPTIONAL) ? "false" : "true", out);
+	    fputs(",\"optional\":", out);
+	    fputs((tp->flags & CMD_OPTIONAL) ? "true" : "false", out);
 	    fputs(",\"hidden\":", out);
 	    fputs((tp->flags & CMD_HIDE) ? "true" : "false", out);
+	    fputs(",\"expands\":", out);
+	    fputs((tp->flags & CMD_EXPANDS) ? "true" : "false", out);
+	    fputs(",\"no_abbrev\":", out);
+	    fputs((tp->flags & CMD_NOABBRV) ? "true" : "false", out);
 	    fputs(",\"help\":", out);
 	    json_write_nullable_string(out, tp->help);
 	    fputs(",\"aliases\":", out);
 	    json_write_item_list(out, tp->aliases);
+	    fputs(",\"flags\":{", out);
+	    fputs("\"optional\":", out);
+	    fputs((tp->flags & CMD_OPTIONAL) ? "true" : "false", out);
+	    fputs(",\"hidden\":", out);
+	    fputs((tp->flags & CMD_HIDE) ? "true" : "false", out);
+	    fputs(",\"expands\":", out);
+	    fputs((tp->flags & CMD_EXPANDS) ? "true" : "false", out);
+	    fputs(",\"no_abbrev\":", out);
+	    fputs((tp->flags & CMD_NOABBRV) ? "true" : "false", out);
+	    fputs("}", out);
 	    fputc('}', out);
 	}
 	fputc(']', out);
 	fputc('}', out);
     }
     fputc(']', out);
+    fputc('}', out);
     fputc('\n', out);
     return 0;
 }
