@@ -35,6 +35,7 @@ static char initcmd_opcode[] = "initcmd";	/*Name of initcmd opcode */
 static cmd_config_section *globalConfig = NULL;
 static const char *commandName = NULL;
 static int syntaxInited = 0;
+static void initSyntax(void);
 
 /* take name and string, and return null string if name is empty, otherwise return
    the concatenation of the two strings */

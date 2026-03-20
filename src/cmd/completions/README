@@ -2,3 +2,8 @@ This directory holds generated shell completion files.
 
 Do not edit generated files by hand. Use:
   src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash <tool>...
+
+Some tools (for example, kas) require client configuration files and may fail
+when run in a build tree. Use --skip-fail to continue generating for other
+commands:
+  src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash --skip-fail <tool>...

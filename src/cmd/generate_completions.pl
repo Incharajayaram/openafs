@@ -9,11 +9,13 @@ use File::Path qw(make_path);
 my $format = 'bash';
 my $out_dir = 'src/cmd/completions/bash';
 my $help = 0;
+my $skip_fail = 0;
 
 GetOptions(
     'format=s'  => \$format,
     'out-dir=s' => \$out_dir,
     'help'      => \$help,
+    'skip-fail' => \$skip_fail,
 ) or usage();
 
 usage() if $help;
@@ -32,6 +34,10 @@ make_path($out_dir);
 for my $tool (@tools) {
     my $json = qx{"$tool" --dump-syntax};
     if ($? != 0) {
+        if ($skip_fail) {
+            warn "skipping $tool: --dump-syntax failed\n";
+            next;
+        }
         die "failed to run $tool --dump-syntax\n";
     }
 
@@ -45,31 +51,31 @@ for my $tool (@tools) {
 
     my $func = "_openafs_${tool_name}";
     print $fh "$func() {\n";
-    print $fh "    local cur=\"\${COMP_WORDS[COMP_CWORD]}\"\n";
+    print $fh '    local cur="${COMP_WORDS[COMP_CWORD]}"' . "\n";
 
     my $no_opcodes = $data->{options}->{no_opcodes} ? 1 : 0;
     my @commands = @{$data->{commands} || []};
 
     if ($no_opcodes) {
         my $opts = join(' ', options_for_command($commands[0]));
-        print $fh "    COMPREPLY=( \$(compgen -W \"$opts\" -- \"$cur\") )\n";
+        print $fh '    COMPREPLY=( $(compgen -W "' . $opts . '" -- "$cur") )' . "\n";
         print $fh "    return\n";
     } else {
         my @visible_cmds = grep { is_visible_command($_) } @commands;
         my $cmd_words = join(' ', map { $_->{command} } @visible_cmds);
-        print $fh "    if [[ \$COMP_CWORD -eq 1 ]]; then\n";
-        print $fh "        COMPREPLY=( \$(compgen -W \"$cmd_words\" -- \"$cur\") )\n";
+        print $fh '    if [[ $COMP_CWORD -eq 1 ]]; then' . "\n";
+        print $fh '        COMPREPLY=( $(compgen -W "' . $cmd_words . '" -- "$cur") )' . "\n";
         print $fh "        return\n";
         print $fh "    fi\n\n";
-        print $fh "    local sub=\"\${COMP_WORDS[1]}\"\n";
-        print $fh "    case \"\$sub\" in\n";
+        print $fh '    local sub="${COMP_WORDS[1]}"' . "\n";
+        print $fh '    case "$sub" in' . "\n";
 
         for my $cmd (@visible_cmds) {
             my $opts = join(' ', options_for_command($cmd));
             my $name = $cmd->{command};
             print $fh "        $name)\n";
             if ($opts ne '') {
-                print $fh "            COMPREPLY=( \$(compgen -W \"$opts\" -- \"$cur\") )\n";
+                print $fh '            COMPREPLY=( $(compgen -W "' . $opts . '" -- "$cur") )' . "\n";
             } else {
                 print $fh "            COMPREPLY=()\n";
             }
@@ -84,7 +90,7 @@ for my $tool (@tools) {
 }
 
 sub usage {
-    die "usage: generate_completions.pl --format bash --out-dir DIR <tool>...\n";
+    die "usage: generate_completions.pl --format bash --out-dir DIR [--skip-fail] <tool>...\n";
 }
 
 sub is_visible_command {

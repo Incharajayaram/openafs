@@ -12,7 +12,7 @@ LIBS = $(abs_top_builddir)/tests/common/libafstest_common.la \
        $(abs_top_builddir)/src/comerr/liboafs_comerr.la \
        $(abs_top_builddir)/src/opr/liboafs_opr.la
 
-BINS = command-t
+BINS = command-t completion-t
 
 all: $(BINS)
 
