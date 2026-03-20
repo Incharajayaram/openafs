@@ -1,0 +1,4 @@
+This directory holds generated shell completion files.
+
+Do not edit generated files by hand. Use:
+  src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash <tool>...
