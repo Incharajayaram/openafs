@@ -27,7 +27,7 @@ check_completion_file(const char *relpath, const char *needle, const char *desc)
 int
 main(int argc, char **argv)
 {
-    plan(4);
+    plan(6);
 
     check_completion_file("src/cmd/completions/bash/fs.bash",
                           "complete -F _openafs_fs fs",
@@ -36,6 +36,14 @@ main(int argc, char **argv)
     check_completion_file("src/cmd/completions/bash/vos.bash",
                           "complete -F _openafs_vos vos",
                           "vos completion");
+
+    check_completion_file("src/cmd/completions/zsh/_fs",
+                          "compdef _openafs_fs fs",
+                          "fs zsh completion");
+
+    check_completion_file("src/cmd/completions/zsh/_vos",
+                          "compdef _openafs_vos vos",
+                          "vos zsh completion");
 
     return 0;
 }
