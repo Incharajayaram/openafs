@@ -19,6 +19,9 @@ all: $(BINS)
 command-t: command-t.o $(LIBS)
 	$(LT_LDRULE_static) command-t.o $(LIBS) $(LIB_roken) $(XLIBS)
 
+completion-t: completion-t.o $(LIBS)
+	$(LT_LDRULE_static) completion-t.o $(LIBS) $(LIB_roken) $(XLIBS)
+
 install:
 
 clean distclean:

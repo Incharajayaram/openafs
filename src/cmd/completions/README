@@ -4,6 +4,12 @@ Do not edit generated files by hand. Use:
   src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash <tool>...
   src/cmd/generate_completions.pl --format zsh  --out-dir src/cmd/completions/zsh  <tool>...
 
+From a configured build tree, the standard regeneration target is:
+  make -C src/cmd completions
+
+This target uses built OpenAFS binaries as the source of truth and refreshes
+the checked-in bash and zsh completion files in this directory.
+
 Some tools (for example, kas) require client configuration files and may fail
 when run in a build tree. You can:
   1) Skip failures:
@@ -13,3 +19,15 @@ when run in a build tree. You can:
      src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash --afsconf-dir /path/to/etc <tool>...
   3) Create a temporary minimal AFSCONF directory automatically:
      src/cmd/generate_completions.pl --format bash --out-dir src/cmd/completions/bash --afsconf-temp <tool>...
+
+Installation:
+  make install copies bash completions to:
+    $(datadir)/bash-completion/completions/<tool>
+  make install copies zsh completions to:
+    $(datadir)/zsh/site-functions/_<tool>
+
+Validation:
+  make -C tests check-completions
+
+The automated tests cover cmd --dump-syntax JSON output, generated file
+syntax, and bash completion behavior for the checked-in scripts.

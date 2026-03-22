@@ -34,6 +34,9 @@ RUNTESTS_ARGS=$(RUNTESTS_DEFAULT_$(TESTS)) $(TESTS)
 check test tests: all runtests
 	MAKECHECK=1 $(abs_top_builddir)/tests/cmdwrap ./runtests $(RUNTESTS_ARGS)
 
+check-completions: all runtests
+	MAKECHECK=1 $(abs_top_builddir)/tests/cmdwrap ./runtests cmd/completion
+
 # To start an interactive subshell with the environment required to run
 # the test programs, run 'make shell'. Run 'exit' to end the subshell.
 #

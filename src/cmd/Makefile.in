@@ -14,6 +14,19 @@ LT_objs=cmd_errors.lo cmd.lo config_file.lo AFS_component_version_number.lo
 LT_deps=$(top_builddir)/src/comerr/liboafs_comerr.la
 LT_libs=
 
+COMPLETION_TOOLS=$(TOP_OBJDIR)/src/bozo/bos \
+	$(TOP_OBJDIR)/src/ptserver/pts \
+	$(TOP_OBJDIR)/src/ubik/udebug \
+	$(TOP_OBJDIR)/src/venus/fs \
+	$(TOP_OBJDIR)/src/volser/vos
+COMPLETION_KAS=$(TOP_OBJDIR)/src/kauth/kas
+COMPLETION_BASH_DIR=$(srcdir)/completions/bash
+COMPLETION_ZSH_DIR=$(srcdir)/completions/zsh
+COMPLETION_ENV=LD_LIBRARY_PATH="$(TOP_OBJDIR)/lib$${LD_LIBRARY_PATH:+:$$LD_LIBRARY_PATH}" \
+	DYLD_LIBRARY_PATH="$(TOP_OBJDIR)/lib$${DYLD_LIBRARY_PATH:+:$$DYLD_LIBRARY_PATH}" \
+	SHLIB_PATH="$(TOP_OBJDIR)/lib$${SHLIB_PATH:+:$$SHLIB_PATH}" \
+	LIBPATH="$(TOP_OBJDIR)/lib$${LIBPATH:+:$$LIBPATH}"
+
 LIB64OBJS=cmd_errors64.o cmd64.o
 
 all: ${TOP_LIBDIR}/libcmd.a ${TOP_LIBDIR}/libcmd_pic.a \
@@ -22,6 +35,21 @@ all: ${TOP_LIBDIR}/libcmd.a ${TOP_LIBDIR}/libcmd_pic.a \
 all64: all ${TOP_LIBDIR}/libcmd64.a
 
 generated: cmd.h cmd_errors.c
+
+completions: $(srcdir)/generate_completions.pl
+	$(MAKE) -C $(TOP_OBJDIR) $(COMPLETION_TOOLS) $(COMPLETION_KAS)
+	$(COMPLETION_ENV) $(PERL) $(srcdir)/generate_completions.pl \
+		--format bash --out-dir $(COMPLETION_BASH_DIR) \
+		$(COMPLETION_TOOLS)
+	$(COMPLETION_ENV) $(PERL) $(srcdir)/generate_completions.pl \
+		--format bash --out-dir $(COMPLETION_BASH_DIR) --afsconf-temp \
+		$(COMPLETION_KAS)
+	$(COMPLETION_ENV) $(PERL) $(srcdir)/generate_completions.pl \
+		--format zsh --out-dir $(COMPLETION_ZSH_DIR) \
+		$(COMPLETION_TOOLS)
+	$(COMPLETION_ENV) $(PERL) $(srcdir)/generate_completions.pl \
+		--format zsh --out-dir $(COMPLETION_ZSH_DIR) --afsconf-temp \
+		$(COMPLETION_KAS)
 
 ${TOP_LIBDIR}/libcmd.a: libcmd.a
 	${INSTALL_DATA} $? $@
@@ -77,20 +105,34 @@ AFS_component_version_number64.o: AFS_component_version_number.c
 #
 # Install targets
 #
-install: libcmd.a cmd.h
+install: libcmd.a cmd.h completions
 	${INSTALL} -d ${DESTDIR}${libdir}/afs
 	${INSTALL} -d ${DESTDIR}${includedir}/afs
 	${INSTALL_DATA} libcmd.a ${DESTDIR}$(libdir)/afs/libcmd.a
 	${INSTALL_DATA} cmd.h ${DESTDIR}${includedir}/afs/cmd.h
+	${INSTALL} -d ${DESTDIR}${datadir}/bash-completion/completions
+	for f in $(srcdir)/completions/bash/*.bash; do \
+		base=`basename "$$f" .bash`; \
+		${INSTALL_DATA} "$$f" ${DESTDIR}${datadir}/bash-completion/completions/$$base; \
+	done
+	${INSTALL} -d ${DESTDIR}${datadir}/zsh/site-functions
+	${INSTALL_DATA} $(srcdir)/completions/zsh/_* ${DESTDIR}${datadir}/zsh/site-functions/
 
 install64: install libcmd64.a
 	${INSTALL_DATA} libcmd64.a ${DESTDIR}${libdir}/afs/libcmd64.a
 
-dest: libcmd.a cmd.h
+dest: libcmd.a cmd.h completions
 	${INSTALL} -d ${DEST}/lib/afs
 	${INSTALL} -d ${DEST}/include/afs
 	${INSTALL_DATA} libcmd.a ${DEST}/lib/afs/libcmd.a
 	${INSTALL_DATA} cmd.h ${DEST}/include/afs/cmd.h
+	${INSTALL} -d ${DEST}/share/bash-completion/completions
+	for f in $(srcdir)/completions/bash/*.bash; do \
+		base=`basename "$$f" .bash`; \
+		${INSTALL_DATA} "$$f" ${DEST}/share/bash-completion/completions/$$base; \
+	done
+	${INSTALL} -d ${DEST}/share/zsh/site-functions
+	${INSTALL_DATA} $(srcdir)/completions/zsh/_* ${DEST}/share/zsh/site-functions/
 
 dest64: dest libcmd64.a
 	${INSTALL_DATA} libcmd64.a ${DEST}/lib/afs/libcmd64.a

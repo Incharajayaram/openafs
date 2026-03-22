@@ -84,6 +84,94 @@ checkList(struct cmd_item *list, ...)
     }
 }
 
+static char *
+read_stream(FILE *fh)
+{
+    long len;
+    size_t nread;
+    char *buf;
+
+    if (fseek(fh, 0, SEEK_END) != 0) {
+        return NULL;
+    }
+
+    len = ftell(fh);
+    if (len < 0) {
+        return NULL;
+    }
+
+    rewind(fh);
+
+    buf = malloc(len + 1);
+    if (buf == NULL) {
+        return NULL;
+    }
+
+    nread = fread(buf, 1, len, fh);
+    buf[nread] = '\0';
+    return buf;
+}
+
+static char *
+dump_syntax_output(void)
+{
+    FILE *fh;
+    char *buf;
+
+    fh = tmpfile();
+    if (fh == NULL) {
+        return NULL;
+    }
+
+    if (cmd_DumpSyntax(fh, "json") != 0) {
+        fclose(fh);
+        return NULL;
+    }
+
+    fflush(fh);
+    buf = read_stream(fh);
+    fclose(fh);
+    return buf;
+}
+
+static int
+dispatch_dump_syntax(int argc, char **argv, char **output)
+{
+    FILE *fh;
+    int saved_stdout;
+    int code;
+
+    *output = NULL;
+
+    fh = tmpfile();
+    if (fh == NULL) {
+        return CMD_INTERNALERROR;
+    }
+
+    fflush(stdout);
+    saved_stdout = dup(STDOUT_FILENO);
+    if (saved_stdout < 0) {
+        fclose(fh);
+        return CMD_INTERNALERROR;
+    }
+
+    if (dup2(fileno(fh), STDOUT_FILENO) < 0) {
+        close(saved_stdout);
+        fclose(fh);
+        return CMD_INTERNALERROR;
+    }
+
+    code = cmd_Dispatch(argc, argv);
+
+    fflush(stdout);
+    dup2(saved_stdout, STDOUT_FILENO);
+    close(saved_stdout);
+
+    *output = read_stream(fh);
+    fclose(fh);
+    return code;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -97,7 +185,7 @@ main(int argc, char **argv)
     char *path;
     char *retstring = NULL;
 
-    plan(109);
+    plan(121);
 
     initialize_CMD_error_table();
 
@@ -361,6 +449,61 @@ main(int argc, char **argv)
     cmd_FreeOptions(&retopts);
     cmd_FreeArgv(tv);
 
+    {
+        struct cmd_syndesc *jsoncmd;
+        struct cmd_syndesc *hidden_cmd;
+        char *json = NULL;
+
+        jsoncmd = cmd_CreateSyntax("jsoncmd", testproc, NULL, 0,
+                                   "json command");
+        cmd_AddParm(jsoncmd, "-visible", CMD_SINGLE, CMD_OPTIONAL,
+                    "visible option");
+        code = cmd_AddParmAlias(jsoncmd, 0, "-v");
+        is_int(0, code, "cmd_AddParmAlias succeeds for json output test");
+        cmd_AddParm(jsoncmd, "-hidden", CMD_FLAG, CMD_OPTIONAL | CMD_HIDE,
+                    "hidden option");
+        code = cmd_CreateAlias(jsoncmd, "jc");
+        is_int(0, code, "cmd_CreateAlias succeeds for json output test");
+
+        hidden_cmd = cmd_CreateSyntax("jsonhidden", testproc, NULL,
+                                      CMD_HIDDEN, "hidden command");
+        ok(hidden_cmd != NULL, "hidden command syntax is created");
+
+        json = dump_syntax_output();
+        ok(json != NULL, "cmd_DumpSyntax produces output");
+        ok(json != NULL && strstr(json, "\"command\":\"jsoncmd\"") != NULL,
+           "dump-syntax contains visible command");
+        ok(json != NULL && strstr(json, "\"aliases\":[\"jc\"]") != NULL,
+           "dump-syntax contains command alias list");
+        ok(json != NULL && strstr(json, "\"command\":\"jc\"") == NULL,
+           "dump-syntax does not emit alias as a separate command");
+        ok(json != NULL && strstr(json, "\"name\":\"-hidden\"") != NULL,
+           "dump-syntax contains hidden parameter entry");
+        ok(json != NULL && strstr(json, "\"aliases\":[\"-v\"]") != NULL,
+           "dump-syntax contains parameter alias list");
+        ok(json != NULL && strstr(json, "\"command\":\"jsonhidden\"") != NULL,
+           "dump-syntax contains hidden command entry");
+        ok(json != NULL && strstr(json,
+                                  "\"command\":\"jsonhidden\",\"help\":\"hidden command\",\"a0name\":null,\"hidden\":true") != NULL,
+           "dump-syntax marks hidden commands in JSON");
+        free(json);
+        json = NULL;
+    }
+
+    code = cmd_ParseLine("--dump-syntax", tv, &tc, 100);
+    is_int(0, code, "cmd_ParseLine succeeds for dump-syntax dispatch");
+    {
+        char *json = NULL;
+
+        code = dispatch_dump_syntax(tc, tv, &json);
+        is_int(0, code, "cmd_Dispatch handles --dump-syntax without parsing required options");
+        ok(json != NULL && strstr(json, "\"format\":\"openafs-cmd-syntax\"") != NULL,
+           "cmd_Dispatch writes dump-syntax JSON output");
+
+        free(json);
+        cmd_FreeArgv(tv);
+    }
+
     /* Now, try adding a configuration file into the mix */
     path = afstest_src_path("tests/cmd/test1.conf");
     cmd_SetCommandName("test");
@@ -386,4 +529,3 @@ main(int argc, char **argv)
 
     return 0;
 }
-

@@ -1,11 +1,12 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use JSON::PP qw(decode_json);
-use Getopt::Long qw(GetOptions);
+
 use File::Basename qw(basename);
 use File::Path qw(make_path);
 use File::Temp qw(tempdir);
+use Getopt::Long qw(GetOptions);
+use JSON::PP qw(decode_json);
 
 my $format = 'bash';
 my $out_dir = 'src/cmd/completions/bash';
@@ -15,10 +16,10 @@ my $afsconf_dir = undef;
 my $afsconf_temp = 0;
 
 GetOptions(
-    'format=s'  => \$format,
-    'out-dir=s' => \$out_dir,
-    'help'      => \$help,
-    'skip-fail' => \$skip_fail,
+    'format=s'      => \$format,
+    'out-dir=s'     => \$out_dir,
+    'help'          => \$help,
+    'skip-fail'     => \$skip_fail,
     'afsconf-dir=s' => \$afsconf_dir,
     'afsconf-temp'  => \$afsconf_temp,
 ) or usage();
@@ -34,11 +35,11 @@ if (!@tools) {
     usage();
 }
 
-make_path($out_dir);
-
 if ($afsconf_temp && defined $afsconf_dir) {
     die "use only one of --afsconf-dir or --afsconf-temp\n";
 }
+
+make_path($out_dir);
 
 for my $tool (@tools) {
     my $json = run_dump_syntax($tool, $afsconf_dir, $afsconf_temp);
@@ -64,92 +65,183 @@ for my $tool (@tools) {
     my @commands = @{$data->{commands} || []};
 
     if ($format eq 'bash') {
-        my $func = "_openafs_${tool_name}";
-        print $fh "$func() {\n";
-        print $fh '    local cur="${COMP_WORDS[COMP_CWORD]}"' . "\n";
-
-        if ($no_opcodes) {
-            my @opts = options_for_command($commands[0]);
-            my $words = bash_option_words(@opts);
-            print $fh '    COMPREPLY=( $(compgen -W "' . $words . '" -- "$cur") )' . "\n";
-            print $fh "    return\n";
-        } else {
-            my @visible_cmds = grep { is_visible_command($_) } @commands;
-            my $cmd_words = join(' ', map { $_->{command} } @visible_cmds);
-            print $fh '    if [[ $COMP_CWORD -eq 1 ]]; then' . "\n";
-            print $fh '        COMPREPLY=( $(compgen -W "' . $cmd_words . '" -- "$cur") )' . "\n";
-            print $fh "        return\n";
-            print $fh "    fi\n\n";
-            print $fh '    local sub="${COMP_WORDS[1]}"' . "\n";
-            print $fh '    case "$sub" in' . "\n";
-
-            for my $cmd (@visible_cmds) {
-                my @opts = options_for_command($cmd);
-                my $words = bash_option_words(@opts);
-                my $name = $cmd->{command};
-                print $fh "        $name)\n";
-                if ($words ne '') {
-                    print $fh '            COMPREPLY=( $(compgen -W "' . $words . '" -- "$cur") )' . "\n";
-                } else {
-                    print $fh "            COMPREPLY=()\n";
-                }
-                print $fh "            ;;\n";
-            }
-            print $fh "    esac\n";
-        }
-
-        print $fh "}\n";
-        print $fh "complete -F $func $tool_name\n";
+        write_bash_completion($fh, $tool_name, $no_opcodes, @commands);
     } else {
-        my $func = "_openafs_${tool_name}";
-        print $fh "#compdef $tool_name\n";
-        print $fh "$func() {\n";
-        print $fh "    local subcmd\n";
-        if ($no_opcodes) {
-            my @opts = options_for_command($commands[0]);
-            print $fh "    _arguments -s \\\n";
-            for my $opt (@opts) {
-                print $fh "        '" . zsh_opt_spec($opt) . "' \\\n";
-            }
-            print $fh "        '*:arg:_files'\n";
-        } else {
-            my @visible_cmds = grep { is_visible_command($_) } @commands;
-            my $cmd_words = join(' ', map { $_->{command} } @visible_cmds);
-            print $fh "    _arguments -C \\\n";
-            print $fh "        '1:subcommand:(" . $cmd_words . ")' \\\n";
-            print $fh "        '*::args:->args'\n\n";
-            print $fh '    case "$state" in' . "\n";
-            print $fh "        args)\n";
-            print $fh '            subcmd="${words[2]}"' . "\n";
-            print $fh '            case "$subcmd" in' . "\n";
-            for my $cmd (@visible_cmds) {
-                my $name = $cmd->{command};
-                my @opts = options_for_command($cmd);
-                print $fh "                $name)\n";
-                if (@opts) {
-                    print $fh "                    _arguments \\\n";
-                    for my $opt (@opts) {
-                        print $fh "                        '" . zsh_opt_spec($opt) . "' \\\n";
-                    }
-                    print $fh "                        '*:arg:_files'\n";
-                } else {
-                    print $fh "                    _files\n";
-                }
-                print $fh "                    ;;\n";
-            }
-            print $fh "            esac\n";
-            print $fh "            ;;\n";
-            print $fh "    esac\n";
-        }
-
-        print $fh "}\n";
-        print $fh "compdef $func $tool_name\n";
+        write_zsh_completion($fh, $tool_name, $no_opcodes, @commands);
     }
+
     close $fh;
 }
 
 sub usage {
     die "usage: generate_completions.pl --format bash --out-dir DIR [--skip-fail] [--afsconf-dir DIR|--afsconf-temp] <tool>...\n";
+}
+
+sub write_bash_completion {
+    my ($fh, $tool_name, $no_opcodes, @commands) = @_;
+    my $func = "_openafs_${tool_name}";
+    my $spec_func = "${func}_complete_specs";
+    my $type_func = "${func}_spec_type";
+    my $seen_func = "${func}_group_seen";
+
+    print $fh "${type_func}() {\n";
+    print $fh '    local target="$1" spec name rest type' . "\n";
+    print $fh "    shift\n";
+    print $fh '    for spec in "$@"; do' . "\n";
+    print $fh '        name="${spec%%:*}"' . "\n";
+    print $fh '        rest="${spec#*:}"' . "\n";
+    print $fh '        type="${rest##*:}"' . "\n";
+    print $fh '        if [[ "$name" == "$target" ]]; then' . "\n";
+    print $fh '            printf "%s\n" "$type"' . "\n";
+    print $fh "            return 0\n";
+    print $fh "        fi\n";
+    print $fh "    done\n";
+    print $fh "    return 1\n";
+    print $fh "}\n\n";
+
+    print $fh "${seen_func}() {\n";
+    print $fh '    local group="$1" spec name rest spec_group i' . "\n";
+    print $fh "    shift\n";
+    print $fh '    for ((i = 1; i < COMP_CWORD; i++)); do' . "\n";
+    print $fh '        for spec in "$@"; do' . "\n";
+    print $fh '            name="${spec%%:*}"' . "\n";
+    print $fh '            rest="${spec#*:}"' . "\n";
+    print $fh '            spec_group="${rest%%:*}"' . "\n";
+    print $fh '            if [[ "$spec_group" == "$group" && "${COMP_WORDS[i]}" == "$name" ]]; then' . "\n";
+    print $fh "                return 0\n";
+    print $fh "            fi\n";
+    print $fh "        done\n";
+    print $fh "    done\n";
+    print $fh "    return 1\n";
+    print $fh "}\n\n";
+
+    print $fh "${spec_func}() {\n";
+    print $fh '    local cur="$1" spec name rest group type prev_type' . "\n";
+    print $fh "    shift\n";
+    print $fh '    local specs=("$@")' . "\n";
+    print $fh '    local words=()' . "\n\n";
+    print $fh '    if [[ $COMP_CWORD -gt 0 ]]; then' . "\n";
+    print $fh "        prev_type=\$(${type_func} \"\${COMP_WORDS[COMP_CWORD-1]}\" \"\${specs[@]}\")\n";
+    print $fh '        if [[ -n "$prev_type" && "$cur" != -* ]]; then' . "\n";
+    print $fh '            COMPREPLY=( $(compgen -f -- "$cur") )' . "\n";
+    print $fh "            return\n";
+    print $fh "        fi\n";
+    print $fh "    fi\n\n";
+    print $fh '    if [[ "$cur" != -* ]]; then' . "\n";
+    print $fh "        COMPREPLY=()\n";
+    print $fh "        return\n";
+    print $fh "    fi\n\n";
+    print $fh '    for spec in "${specs[@]}"; do' . "\n";
+    print $fh '        name="${spec%%:*}"' . "\n";
+    print $fh '        rest="${spec#*:}"' . "\n";
+    print $fh '        group="${rest%%:*}"' . "\n";
+    print $fh '        type="${rest##*:}"' . "\n";
+    print $fh '        if [[ "$type" == "list" ]] || ! ' . $seen_func . ' "$group" "${specs[@]}"; then' . "\n";
+    print $fh '            words+=( "$name" )' . "\n";
+    print $fh "        fi\n";
+    print $fh "    done\n";
+    print $fh '    COMPREPLY=( $(compgen -W "${words[*]}" -- "$cur") )' . "\n";
+    print $fh "}\n\n";
+
+    print $fh "$func() {\n";
+    print $fh '    local cur="${COMP_WORDS[COMP_CWORD]}"' . "\n";
+
+    if ($no_opcodes) {
+        my @opts = options_for_command($commands[0]);
+        my $specs = bash_option_specs(@opts);
+        print $fh '    local specs=(' . shell_words(@$specs) . ')' . "\n";
+        print $fh "    ${spec_func} \"\$cur\" \"\${specs[@]}\"\n";
+        print $fh "    return\n";
+    } else {
+        my @visible_cmds = grep { is_visible_command($_) } @commands;
+        my @choices = command_choices(@visible_cmds);
+        my $cmd_words = join(' ', map { $_->{name} } @choices);
+
+        print $fh '    if [[ $COMP_CWORD -eq 1 ]]; then' . "\n";
+        print $fh '        COMPREPLY=( $(compgen -W "' . $cmd_words . '" -- "$cur") )' . "\n";
+        print $fh "        return\n";
+        print $fh "    fi\n\n";
+        print $fh '    local sub="${COMP_WORDS[1]}"' . "\n";
+        print $fh '    case "$sub" in' . "\n";
+
+        for my $cmd (@visible_cmds) {
+            my @opts = options_for_command($cmd);
+            my $specs = bash_option_specs(@opts);
+            my $pattern = join('|', command_case_names($cmd));
+            print $fh "        $pattern)\n";
+            print $fh '            local specs=(' . shell_words(@$specs) . ')' . "\n";
+            print $fh "            ${spec_func} \"\$cur\" \"\${specs[@]}\"\n";
+            print $fh "            ;;\n";
+        }
+
+        print $fh "    esac\n";
+    }
+
+    print $fh "}\n";
+    print $fh "complete -F $func $tool_name\n";
+}
+
+sub write_zsh_completion {
+    my ($fh, $tool_name, $no_opcodes, @commands) = @_;
+    my $func = "_openafs_${tool_name}";
+
+    print $fh "#compdef $tool_name\n";
+    print $fh "$func() {\n";
+    print $fh "    local context state state_descr line\n";
+    print $fh "    typeset -A opt_args\n";
+    print $fh "    local -a subcommands\n";
+
+    if ($no_opcodes) {
+        my @opts = options_for_command($commands[0]);
+        print $fh "    _arguments -s \\\n";
+        for my $opt (@opts) {
+            print $fh '        ' . zsh_single_quote(zsh_opt_spec($opt)) . " \\\n";
+        }
+        print $fh '        ' . zsh_single_quote('*:arg:_files') . "\n";
+    } else {
+        my @visible_cmds = grep { is_visible_command($_) } @commands;
+        my @choices = command_choices(@visible_cmds);
+
+        print $fh "    subcommands=(\n";
+        for my $choice (@choices) {
+            print $fh '        ' . zsh_single_quote(zsh_choice_item($choice->{name},
+                                                                   $choice->{help})) . "\n";
+        }
+        print $fh "    )\n";
+        print $fh "    _arguments -C \\\n";
+        print $fh '        ' . zsh_single_quote('1:subcommand:->subcmd') . " \\\n";
+        print $fh '        ' . zsh_single_quote('*::args:->args') . "\n\n";
+        print $fh '    case "$state" in' . "\n";
+        print $fh "        subcmd)\n";
+        print $fh "            _describe -t commands 'subcommand' subcommands\n";
+        print $fh "            ;;\n";
+        print $fh "        args)\n";
+        print $fh '            local subcmd="${words[2]}"' . "\n";
+        print $fh '            case "$subcmd" in' . "\n";
+
+        for my $cmd (@visible_cmds) {
+            my @opts = options_for_command($cmd);
+            my $pattern = join('|', command_case_names($cmd));
+            print $fh "                $pattern)\n";
+            if (@opts) {
+                print $fh "                    _arguments \\\n";
+                for my $opt (@opts) {
+                    print $fh '                        ' . zsh_single_quote(zsh_opt_spec($opt)) . " \\\n";
+                }
+                print $fh '                        ' . zsh_single_quote('*:arg:_files') . "\n";
+            } else {
+                print $fh "                    _files\n";
+            }
+            print $fh "                    ;;\n";
+        }
+
+        print $fh "            esac\n";
+        print $fh "            ;;\n";
+        print $fh "    esac\n";
+    }
+
+    print $fh "}\n";
+    print $fh "compdef $func $tool_name\n";
 }
 
 sub is_visible_command {
@@ -162,9 +254,43 @@ sub is_visible_command {
     return 1;
 }
 
+sub command_choices {
+    my (@commands) = @_;
+    my @out;
+
+    for my $cmd (@commands) {
+        my $name = $cmd->{command};
+        my $help = $cmd->{help} || $name;
+
+        push @out, {
+            name => $name,
+            help => $help,
+        };
+
+        for my $alias (@{$cmd->{aliases} || []}) {
+            my $alias_help = $help;
+            if ($alias ne $name) {
+                $alias_help .= " (alias for $name)";
+            }
+            push @out, {
+                name => $alias,
+                help => $alias_help,
+            };
+        }
+    }
+
+    return @out;
+}
+
+sub command_case_names {
+    my ($cmd) = @_;
+    return ($cmd->{command}, @{$cmd->{aliases} || []});
+}
+
 sub options_for_command {
     my ($cmd) = @_;
     return () if !$cmd || !$cmd->{parameters};
+
     my @out;
     for my $p (@{$cmd->{parameters}}) {
         next if $p->{hidden};
@@ -176,57 +302,101 @@ sub options_for_command {
             push @names, @{$p->{aliases}};
         }
 
+        my $help = defined($p->{help}) ? $p->{help} : 'option';
         my $type = $p->{type} || '';
+        my $group = $p->{name};
+
         for my $name (@names) {
             push @out, {
-                name => $name,
-                type => $type,
+                name  => $name,
+                group => $group,
+                help  => $help,
+                type  => $type,
             };
         }
     }
+
     return @out;
 }
 
-sub bash_option_words {
+sub bash_option_specs {
     my (@opts) = @_;
-    return join(' ', map { $_->{name} } @opts);
+    return [map { join(':', $_->{name}, $_->{group}, $_->{type}) } @opts];
+}
+
+sub shell_quote {
+    my ($str) = @_;
+    $str =~ s/'/'\\''/g;
+    return "'$str'";
+}
+
+sub shell_words {
+    return join(' ', map { shell_quote($_) } @_);
+}
+
+sub zsh_escape_text {
+    my ($str) = @_;
+    $str =~ s/\\/\\\\/g;
+    $str =~ s/\[/\\[/g;
+    $str =~ s/\]/\\]/g;
+    $str =~ s/:/\\:/g;
+    return $str;
+}
+
+sub zsh_single_quote {
+    my ($str) = @_;
+    return shell_quote($str);
+}
+
+sub zsh_choice_item {
+    my ($name, $help) = @_;
+    return zsh_escape_text($name) . ':' . zsh_escape_text($help || $name);
 }
 
 sub zsh_opt_spec {
     my ($opt) = @_;
+    my $prefix = ($opt->{type} || '') eq 'list' ? '*' : '';
     my $name = $opt->{name};
     my $type = $opt->{type} || '';
+    my $help = zsh_escape_text($opt->{help} || 'option');
 
     if ($type eq 'flag') {
-        return $name . "[noarg]";
+        return $prefix . $name . '[' . $help . ']';
     }
     if ($type eq 'single_or_flag') {
-        return $name . "[arg]::arg:_files";
+        return $prefix . $name . '[' . $help . ']::arg:_files';
     }
     if ($type eq 'single' || $type eq 'list') {
-        return $name . "[arg]:arg:_files";
+        return $prefix . $name . '[' . $help . ']:arg:_files';
     }
-    return $name . "[arg]:arg:_files";
+    return $prefix . $name . '[' . $help . ']:arg:_files';
 }
 
 sub run_dump_syntax {
     my ($tool, $confdir, $use_temp) = @_;
-    my $env = '';
 
     if ($use_temp) {
         $confdir = temp_afsconf_dir();
     }
 
-    if (defined $confdir) {
-        $env = "AFSCONF=\"$confdir\" ";
+    local $ENV{AFSCONF} = $confdir if defined $confdir;
+
+    open my $fh, '-|', $tool, '--dump-syntax'
+        or die "failed to run $tool --dump-syntax: $!\n";
+
+    local $/ = undef;
+    my $json = <$fh>;
+    close($fh);
+
+    if (!defined $json) {
+        return '';
     }
 
-    my $json = qx{$env"$tool" --dump-syntax};
     return $json;
 }
 
 sub temp_afsconf_dir {
-    my $dir = tempdir("afsconfXXXXXX", TMPDIR => 1, CLEANUP => 1);
+    my $dir = tempdir('afsconfXXXXXX', TMPDIR => 1, CLEANUP => 1);
     my $thiscell = "$dir/ThisCell";
     my $csdb = "$dir/CellServDB";
 
