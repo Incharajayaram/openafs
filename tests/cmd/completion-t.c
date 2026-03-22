@@ -115,7 +115,7 @@ check_bash_completion(const char *relpath, const char *func,
 int
 main(int argc, char **argv)
 {
-    plan(23);
+    plan(24);
 
     check_completion_file("src/cmd/completions/bash/fs.bash", "fs bash completion");
     check_completion_file("src/cmd/completions/bash/vos.bash", "vos bash completion");
@@ -169,7 +169,7 @@ main(int argc, char **argv)
                               "compdef _openafs_fs fs",
                               "fs zsh compdef is present");
     check_completion_contains("src/cmd/completions/zsh/_fs",
-                              "setacl\\:set access control list",
+                              "setacl:set access control list",
                               "zsh subcommand descriptions are generated");
     check_completion_contains("src/cmd/completions/zsh/_kas",
                               "compdef _openafs_kas kas",
