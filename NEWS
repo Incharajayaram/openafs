@@ -4,10 +4,6 @@ OpenAFS 1.9.1
 
   All platforms
 
-    * Add generated bash and zsh shell completion support for OpenAFS
-      command tools, based on the cmd --dump-syntax JSON interface, and
-      integrate validation for the generated completion files.
-
     * Fix initial Rx Connection ID (CID) generation.
       Remove stale initialization and overflow detection logic that resulted
       in connection failures due to all CIDs being set to 0x80000002.
